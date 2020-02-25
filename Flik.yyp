@@ -39,6 +39,14 @@
             }
         },
         {
+            "Key": "151f3be0-641c-4484-8beb-0bef5b12d210",
+            "Value": {
+                "id": "72fa954b-73b3-49cc-a5f3-0070124eb419",
+                "resourcePath": "sprites\\spr_stair_down\\spr_stair_down.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "1dbc2a2a-4916-4a43-a403-769c9989fc4c",
             "Value": {
                 "id": "6b269d4c-33d8-40f8-9cb5-3f83d6827546",
@@ -135,11 +143,27 @@
             }
         },
         {
+            "Key": "622b8548-d283-497d-a40d-b80ed42fe9d6",
+            "Value": {
+                "id": "e9553b84-2fc3-4c53-af72-cd2a21c50b49",
+                "resourcePath": "objects\\obj_collision_float\\obj_collision_float.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "699a3d53-46d6-4574-ac9a-ee4afd2dbd64",
             "Value": {
                 "id": "1d681e36-5a68-4b96-9568-6d5bf7a477f9",
                 "resourcePath": "views\\699a3d53-46d6-4574-ac9a-ee4afd2dbd64.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "6c0148d6-63b6-472f-96bf-c3b8399e2738",
+            "Value": {
+                "id": "eadf4da5-a6fe-4376-bc87-ce0ccf552429",
+                "resourcePath": "sprites\\spr_player_climb\\spr_player_climb.yy",
+                "resourceType": "GMSprite"
             }
         },
         {
@@ -279,6 +303,14 @@
             }
         },
         {
+            "Key": "c3e837ac-ac41-4289-9532-25c8c6a01f35",
+            "Value": {
+                "id": "74fe66e3-b5ba-403c-ad71-65ddd7b382eb",
+                "resourcePath": "sprites\\spr_collision_float\\spr_collision_float.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "cbfde081-e414-4633-bb2a-a016b9e08e8f",
             "Value": {
                 "id": "3f910f1b-4805-4f4a-b48a-f36dc327b1fc",
@@ -300,6 +332,14 @@
                 "id": "57e24498-504f-47a6-80e0-4b2e66c1b97b",
                 "resourcePath": "options\\windows\\options_windows.yy",
                 "resourceType": "GMWindowsOptions"
+            }
+        },
+        {
+            "Key": "d83c3c6b-dc00-4db5-8576-943c24f46faa",
+            "Value": {
+                "id": "18ed970a-ae10-4806-8851-967135b34df3",
+                "resourcePath": "objects\\obj_stair_down\\obj_stair_down.yy",
+                "resourceType": "GMObject"
             }
         },
         {
