@@ -5,26 +5,25 @@
 // You can write your code in this editor
 
 
-var up, down, left, right, vel_h, vel_v, desli;
+var up, down, left, right, space, vel_h, vel_v, desli;
 
 up = keyboard_check(vk_up);
 down = keyboard_check(vk_down);
 left = keyboard_check(vk_left);
 right = keyboard_check(vk_right);
+space = keyboard_check(vk_space);
 //interac = keyboard_check_pressed(ord("E"));
 
-if (up) { 
-
+if (space) { 
 	if (estado != "pulando") {
 		face = 1; 
 		faceInt = -5; 
-		gravy -= 5;
+		gravy -= 4;
 		estado = "pulando";
 		upPressed = true;
 	}
 	if (upPressed) {
-		gravy -= 5;
-		show_debug_message(gravy);
+		gravy -= 4;
 		if (gravy <= -30){
 			gravy = 1;
 			upPressed = false;
@@ -46,7 +45,12 @@ if (left) { face = 2; faceInt = -5; }
 if (right) { face = 0; faceInt = 5; }
 
 vel_h = (right - left) * vel;
-vel_v = gravy * vel;
+
+if (estado == "escalando") {
+	vel_v = (down - up) * vel;	
+} else {
+	vel_v = gravy * vel;
+}
 
 desli = des_n;	
 
@@ -71,31 +75,60 @@ switch(estado) {
 			sprite_index = esq;	
 		}
 		
+		
 		if (abs(velv) < .5 && abs(velh) < .5) estado = "parado";
 		
 		break;
 	case "pulando":
-		velh = lerp(velh, vel_h, desli);
+		velh = lerp(velh, vel_h, .5);
 		velv = lerp(velv, vel_v, desli);
 		if (velv <= maxVelv) {
 			velv = maxVelv;
 		}
+		
+		if (upPressed) {
+			sprite_index = jump;
+		} else {
+			sprite_index = fall;
+		}
 
+		break;
+	case "escalando":
+		velv = lerp(velv, vel_v, desli);
+		
+		if (!place_meeting(x, y, obj_stair)) {
+			estado = "movendo";	
+		}
+		
 		break;
 }
 
-if (place_meeting(x + velh, y, obj_collision)) {
-	while (!place_meeting(x + sign(velh), y, obj_collision)) {
-		x += sign(velh);
+if (estado != "escalando") {
+	if (place_meeting(x + velh, y, obj_collision)) {
+		while (!place_meeting(x + sign(velh), y, obj_collision)) {
+			x += sign(velh);
+		}
+		velh = 0;
 	}
-	velh = 0;
+	if (place_meeting(x, y + velv, obj_collision)) {
+		while (!place_meeting(x, y + sign(velv), obj_collision)) {
+			y += sign(velv);	
+		}
+		velv = 0;
+		if (estado == "pulando") estado = "movendo";
+	}
 }
-if (place_meeting(x, y + velv, obj_collision)) {
-	while (!place_meeting(x, y + sign(velv), obj_collision)) {
-		y += sign(velv);	
+
+if (place_meeting(x, y, obj_stair)) {
+	if (up || down) {
+		estado = "escalando";	
 	}
-	velv = 0;
-	if (estado == "pulando") estado = "movendo";
+}
+
+if (estado != "pulando" && estado != "escalando") {
+	if (!place_meeting(x, y + 4, obj_collision)) {
+		y += 3;	
+	}
 }
 
 x += velh;
