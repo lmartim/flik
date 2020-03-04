@@ -25,6 +25,7 @@ if (space) {
 	if (upPressed) {
 		gravy -= 4;
 		if (gravy <= -30){
+			show_debug_message("TESTE");
 			estado = "caindo";
 			gravy = 1;
 			upPressed = false;
@@ -119,55 +120,6 @@ switch(estado) {
 		break;
 }
 
-//COLISÕES PADRÕES
-if (place_meeting(x + velh, y, obj_collision)) {
-	while (!place_meeting(x + sign(velh), y, obj_collision)) {
-		x += sign(velh);
-	}
-	velh = 0;
-}
-if (place_meeting(x, y + velv, obj_collision)) {
-	while (!place_meeting(x, y + sign(velv), obj_collision)) {
-		y += sign(velv);	
-	}
-	velv = 0;
-	if (estado == "caindo") estado = "movendo";
-}
-
-//COLISÃO COM PLATAFORMAS, IMPEDINDO QUE PLAYER ULTRAPASSE
-if (estado != "escalando" && estado != "pulando") {
-	if (estado == "caindo") {
-		objColFloat = instance_place(x, y, obj_collision_float);
-		if (objColFloat) {			
-			show_debug_message(objColFloat.y);
-			show_debug_message(y);
-		}
-	} else {
-		if (place_meeting(x, y + velv, obj_collision_float)) {
-			while (!place_meeting(x, y + sign(velv), obj_collision_float)) {
-				y += sign(velv);	
-			}
-			velv = 0;
-			if (estado == "caindo") estado = "movendo";
-		}	
-	}
-}
-
-
-if (estado == "caindo") {
-	if (place_meeting(x, y + sprite_height, obj_collision_float)) {
-		estado = "parado";
-	}	
-}
-
-// GRAVIDADE CASO PLAYER SAIA DE UMA PLATAFORMA
-if (estado != "pulando" && estado != "escalando" && estado != "caindo") {
-	if (!place_meeting(x, y + 4, obj_collision) && !place_meeting(x, y + 4, obj_collision_float)) {
-		y += 4;	
-		estado = "caindo";
-	}
-}
-
 //SUBINDO E DESCENDO ESCADAS
 isStairsDown = instance_place(x, y, obj_stair_down);
 isStairs = instance_place(x, y, obj_stair);
@@ -189,5 +141,3 @@ if (isStairs && estado != "escalando") {
 	}
 }
 
-x += velh;
-y += velv;
