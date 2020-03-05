@@ -4,121 +4,74 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+//Checando colisão com o chão
+chao = place_meeting(x, y + 1, obj_collision);
 
-var up, down, left, right, space, vel_h, vel_v, desli, isStairs, isStairsDown, objColFloat;
+//Configurando timer do pulo
+if (chao) {
+	timer_pulo = limite_pulo;	
+} else {
+	if (timer_pulo > 0) timer_pulo--;	
+}
+
+//-----------CONTROLES
+var up, down, left, right, jump, avanco_h, isStairs, isStairsDown;
 
 up = keyboard_check(vk_up);
 down = keyboard_check(vk_down);
 left = keyboard_check(vk_left);
 right = keyboard_check(vk_right);
-space = keyboard_check(vk_space);
-//interac = keyboard_check_pressed(ord("E"));
+jump = keyboard_check_pressed(vk_space);
 
-if (space) { 
-	if (estado != "pulando" && estado != "caindo") {
-		face = 1; 
-		faceInt = -5; 
-		gravy -= 4;
-		estado = "pulando";
-		upPressed = true;
-	}
-	if (upPressed) {
-		gravy -= 4;
-		if (gravy <= -30){
-			show_debug_message("TESTE");
-			estado = "caindo";
-			gravy = 1;
-			upPressed = false;
-		}
-	}
-} else {
-	face = 3; 
-	faceInt = 5;
-	upPressed = false;
-	
-	if (estado == "caindo") {
-		gravy = 2;
-	} else {
-		gravy = 0;	
-	}
-}
-if (down) { face = 3; faceInt = 5; }
-if (left) { face = 2; faceInt = -5; }
-if (right) { face = 0; faceInt = 5; }
+//CONFIG MOVIMENTAÇÃO
+avanco_h = (right - left) * max_velh;
+if (chao) acel = acel_chao;
+else acel = acel_ar;
 
-vel_h = (right - left) * vel;
-
-if (estado == "escalando") {
-	vel_v = (down - up) * vel;	
-} else {
-	vel_v = gravy * vel;
-}
-
-desli = des_n;	
-
-if (velh != 0) {
-	image_xscale = sign(velh) * 1;
-}
-
+//STATE MACHINE
 switch(estado) {
-	case "parado":
+	case state.parado:
+		
 		velh = 0;
 		velv = 0;
 		
-		sprite_index = idle;
-
-		if (vel_v != 0 || vel_h != 0) estado = "movendo";
+		image_speed = 1;
+		sprite_index = spr_idle;
 		
+		//Pulando
+		if (jump && chao) velv = -max_velv;	
+		
+		//Gravidade
+		if (!chao) velv += grav;
+		
+		//State change
+		if (abs(velh) > 0 || abs(velv) > 0 || left || right || jump) {
+			estado = state.movendo;	
+		}
+		
+	
 		break;
-	case "movendo":
-		velh = lerp(velh, vel_h, desli);
-		velv = lerp(velv, vel_v, desli);
-		if (face == 0 || face == 2) {
-			sprite_index = esq;	
-		}
+	case state.movendo:
+		
+		//Aplicando movimentação
+		velh = lerp(velh, avanco_h, acel);
+		
+		//Gravidade
+		if (!chao) velv += grav;
 		
 		
-		if (abs(velv) < .5 && abs(velh) < .5) estado = "parado";
-		
-		break;
-	case "caindo":
-		velh = lerp(velh, vel_h, .5);
-		velv = lerp(velv, vel_v, desli);
-		if (velv <= maxVelv) {
-			velv = maxVelv;
-		}
-
-		break;
-	case "pulando":
-		velh = lerp(velh, vel_h, .5);
-		velv = lerp(velv, vel_v, desli);
-		if (velv <= maxVelv) {
-			velv = maxVelv;
+		//Pulando
+		if (jump && (chao || timer_pulo > 0)) {
+			velv = -max_velv;	
+			sprite_index = spr_jump;
 		}
 		
-		if (upPressed) {
-			sprite_index = jump;
-		} else {
-			sprite_index = fall;
-			estado = "caindo";
-		}
-
-		break;
-	case "escalando":
-		sprite_index = climb;
-		velh = 0;
-		velv = lerp(velv, vel_v, desli);
-		
-		if (!place_meeting(x, y, obj_stair) && !place_meeting(x, y, obj_stair_down)) {
-			estado = "movendo";	
-		}
-		
-		if (down && place_meeting(x, y + velv, obj_collision)) {
-			estado = "movendo";	
-		}
 		
 		break;
 }
+
+//LIMITANDO VELOCIDADE
+velv = clamp(velv, -max_velv, max_velv);
 
 //SUBINDO E DESCENDO ESCADAS
 isStairsDown = instance_place(x, y, obj_stair_down);
