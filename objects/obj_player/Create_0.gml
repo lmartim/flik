@@ -12,17 +12,23 @@ velh = 0;
 velv = 0;
 max_velh = 6;
 max_velv = 8;
+max_velv_escada = 2;
 
 //--------------PULO
 limite_pulo = 6;
 timer_pulo = limite_pulo;
+
+//--------------ESCADA
+isStairs = false;
+isStairsDown = false;
 
 //--------------CONTROLE
 chao = false;
 
 enum state {
 	parado,
-	movendo
+	movendo,
+	escalando
 }
 estado = state.parado
 

@@ -15,7 +15,7 @@ if (chao) {
 }
 
 //-----------CONTROLES
-var up, down, left, right, jump, avanco_h, isStairs, isStairsDown;
+var up, down, left, right, jump, avanco_h, avanco_v;
 
 up = keyboard_check(vk_up);
 down = keyboard_check(vk_down);
@@ -25,6 +25,8 @@ jump = keyboard_check_pressed(vk_space);
 
 //CONFIG MOVIMENTAÇÃO
 avanco_h = (right - left) * max_velh;
+avanco_v = (down - up) * max_velv;
+
 if (chao) acel = acel_chao;
 else acel = acel_ar;
 
@@ -59,13 +61,21 @@ switch(estado) {
 		//Gravidade
 		if (!chao) velv += grav;
 		
-		
 		//Pulando
 		if (jump && (chao || timer_pulo > 0)) {
 			velv = -max_velv;	
 			sprite_index = spr_jump;
 		}
 		
+		break;
+	case state.escalando:
+		velh = 0;
+		velv = lerp(velv, avanco_v, acel);
+		
+		if (!isStairs || (down && place_meeting(x, y + 1, obj_collision))) {
+			estado = state.movendo;
+			velv = 0;
+		}
 		
 		break;
 }
@@ -74,23 +84,14 @@ switch(estado) {
 velv = clamp(velv, -max_velv, max_velv);
 
 //SUBINDO E DESCENDO ESCADAS
-isStairsDown = instance_place(x, y, obj_stair_down);
-isStairs = instance_place(x, y, obj_stair);
-if (isStairsDown) {
-	if(estado == "escalando") {
-		estado = "movendo";	
-	}
-	if (estado != "escalando" && down) {
-		x = isStairsDown.x+20;
-		y = isStairsDown.y+90;
-		estado = "escalando";	
-	}
+if (isStairs && estado != state.escalando && up && !isStairsDown) {
+	x = isStairs.x+20;
+	y = isStairs.y+15;
+	estado = state.escalando;	
 }
-if (isStairs && estado != "escalando") {
-	if (up && !isStairsDown) {
-		x = isStairs.x+20;
-		y = isStairs.y+15;
-		estado = "escalando";	
-	}
+if (isStairsDown && estado != state.escalando && down) {
+	x = isStairs.x+20;
+	y = isStairs.y+15;
+	estado = state.escalando;	
 }
 
