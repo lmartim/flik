@@ -5,7 +5,7 @@
 // You can write your code in this editor
 
 //Checando colisão com o chão
-chao = place_meeting(x, y + 1, obj_collision);
+chao = place_meeting(x, y + 2, obj_collision);
 
 //Configurando timer do pulo
 if (chao) {
@@ -27,10 +27,15 @@ jump = keyboard_check_pressed(vk_space);
 avanco_h = (right - left) * max_velh;
 avanco_v = (down - up) * max_velv;
 
+if (velh != 0) {
+	image_xscale = sign(velh) * 1;
+}
+
 if (chao) acel = acel_chao;
 else acel = acel_ar;
 
 //STATE MACHINE
+show_debug_message(string(estado));
 switch(estado) {
 	case state.parado:
 		
@@ -40,20 +45,25 @@ switch(estado) {
 		image_speed = 1;
 		sprite_index = spr_idle;
 		
-		//Pulando
-		if (jump && chao) velv = -max_velv;	
-		
 		//Gravidade
 		if (!chao) velv += grav;
 		
+		//Pulando
+		if (jump && (chao || timer_pulo > 0)) {
+			velv = -max_velv;
+			estado = state.pulando;
+		}
+		
 		//State change
-		if (abs(velh) > 0 || abs(velv) > 0 || left || right || jump) {
+		if (abs(velh) > 0 || left || right) {
 			estado = state.movendo;	
 		}
 		
 	
 		break;
 	case state.movendo:
+	
+		sprite_index = spr_esq;
 		
 		//Aplicando movimentação
 		velh = lerp(velh, avanco_h, acel);
@@ -63,18 +73,41 @@ switch(estado) {
 		
 		//Pulando
 		if (jump && (chao || timer_pulo > 0)) {
-			velv = -max_velv;	
-			sprite_index = spr_jump;
+			velv = -max_velv;
+			estado = state.pulando;
 		}
+		
+		if (abs(velv) < .5 && abs(velh) < .5) estado = state.parado;
 		
 		break;
 	case state.escalando:
 		velh = 0;
-		velv = lerp(velv, avanco_v, acel);
+		velv = avanco_v/2;
+		
+		sprite_index = spr_climb;
+		if (up || down) {
+			image_speed = .5;
+		} else {
+			image_speed = 0;	
+		}
 		
 		if (!isStairs || (down && place_meeting(x, y + 1, obj_collision))) {
-			estado = state.movendo;
+			estado = state.parado;
 			velv = 0;
+		}
+		
+		break;
+	case state.pulando:
+	
+		velh = lerp(velh, avanco_h, acel);
+		
+		if (!chao) velv += grav;
+		else estado = state.movendo;
+		
+		if (velv > 0) {
+			sprite_index = spr_fall;
+		} else {
+			sprite_index = spr_jump;	
 		}
 		
 		break;

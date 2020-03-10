@@ -28,7 +28,8 @@ chao = false;
 enum state {
 	parado,
 	movendo,
-	escalando
+	escalando,
+	pulando
 }
 estado = state.parado
 
