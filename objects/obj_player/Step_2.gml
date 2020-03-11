@@ -9,6 +9,7 @@ if (place_meeting(x + velh, y, obj_collision)) {
 }
 
 if (place_meeting(x, y + velv, obj_collision)) {
+
 	while(!place_meeting(x, y + sign(velv), obj_collision)) {
 		y += sign(velv);	
 	}

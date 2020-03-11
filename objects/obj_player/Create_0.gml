@@ -12,7 +12,6 @@ velh = 0;
 velv = 0;
 max_velh = 6;
 max_velv = 8;
-max_velv_escada = 2;
 
 //--------------PULO
 limite_pulo = 6;

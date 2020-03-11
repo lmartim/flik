@@ -55,6 +55,14 @@
             }
         },
         {
+            "Key": "1ae0df55-343a-475d-a68a-e5ceb3634b27",
+            "Value": {
+                "id": "cf6dfaf8-5187-4f17-a935-2b3460248b8a",
+                "resourcePath": "objects\\obj_npc_boy_03\\obj_npc_boy_03.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "1dbc2a2a-4916-4a43-a403-769c9989fc4c",
             "Value": {
                 "id": "6b269d4c-33d8-40f8-9cb5-3f83d6827546",
@@ -135,14 +143,6 @@
             }
         },
         {
-            "Key": "4cc98d74-6ea2-42f1-b407-ad5bbc0ce141",
-            "Value": {
-                "id": "bec1d378-9b16-43be-8d35-87ee420b466d",
-                "resourcePath": "objects\\obj_collision_half\\obj_collision_half.yy",
-                "resourceType": "GMObject"
-            }
-        },
-        {
             "Key": "4f2066cd-af49-4f8c-860d-143fcc588867",
             "Value": {
                 "id": "192286a8-5f51-4a7a-933c-268a1a863cd3",
@@ -156,6 +156,22 @@
                 "id": "72205ccc-802d-4cba-b67e-7fa2b6aed98e",
                 "resourcePath": "views\\5141c5c6-5239-41bf-b713-d933eea80700.yy",
                 "resourceType": "GMFolder"
+            }
+        },
+        {
+            "Key": "5693f6bc-d966-4308-bdca-05c8cee8bed8",
+            "Value": {
+                "id": "542b37aa-1573-4f13-949b-9a581e72f8ae",
+                "resourcePath": "objects\\obj_npc_boy_01\\obj_npc_boy_01.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "5f648075-07d0-4a66-8ab3-d60647695815",
+            "Value": {
+                "id": "eb8c1558-0239-40ac-95ab-cd3fccbe7f72",
+                "resourcePath": "objects\\obj_npc_girl_02\\obj_npc_girl_02.yy",
+                "resourceType": "GMObject"
             }
         },
         {
@@ -287,6 +303,14 @@
             }
         },
         {
+            "Key": "93b8253d-da39-4f3c-9b33-d1fca2259bb2",
+            "Value": {
+                "id": "d4606579-20eb-45de-a24f-aafbfdbb5edb",
+                "resourcePath": "sprites\\spr_npc_boy_02\\spr_npc_boy_02.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "9ba4a4df-a8a0-4fd9-9e5c-258572f31961",
             "Value": {
                 "id": "6d0c7d74-381f-4aac-ad5c-10c2e28104f4",
@@ -359,6 +383,14 @@
             }
         },
         {
+            "Key": "b97b971c-e1eb-4fb7-81f3-847bb12c4e39",
+            "Value": {
+                "id": "f04481e0-1f56-4cfc-8f98-20d679fc2081",
+                "resourcePath": "sprites\\spr_npc_boy_03\\spr_npc_boy_03.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "bab29d5b-ec17-431a-8d0d-aad12e050cfe",
             "Value": {
                 "id": "b519dcd9-2205-4bbb-be55-a37fb2f32703",
@@ -415,10 +447,34 @@
             }
         },
         {
+            "Key": "d5ad65ff-fa52-491d-a2f3-4f170d1b57bd",
+            "Value": {
+                "id": "a0f2204d-c51f-4005-9d6b-6c0547bbb683",
+                "resourcePath": "sprites\\spr_npc_girl_02\\spr_npc_girl_02.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
             "Key": "d83c3c6b-dc00-4db5-8576-943c24f46faa",
             "Value": {
                 "id": "18ed970a-ae10-4806-8851-967135b34df3",
                 "resourcePath": "objects\\obj_stair_down\\obj_stair_down.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "df500903-3b12-4dfe-8e0e-25a2bfee0d11",
+            "Value": {
+                "id": "b93a7a43-4ee3-4d32-9690-281e675bda6c",
+                "resourcePath": "sprites\\spr_bg_02\\spr_bg_02.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "e09170ab-0e0b-48ef-b8d5-1ae1ac3f49d7",
+            "Value": {
+                "id": "08473b74-810e-400c-93af-1a91ecc8a0b4",
+                "resourcePath": "objects\\obj_npc_boy_02\\obj_npc_boy_02.yy",
                 "resourceType": "GMObject"
             }
         },
@@ -435,6 +491,14 @@
             "Value": {
                 "id": "676d2d09-4e7f-4470-8a58-157883636a46",
                 "resourcePath": "sprites\\spr_bbq\\spr_bbq.yy",
+                "resourceType": "GMSprite"
+            }
+        },
+        {
+            "Key": "ecf15427-16a3-4da7-a697-7f3bf884877f",
+            "Value": {
+                "id": "e8e0614b-d3fd-4482-ae66-4615f6ee82a8",
+                "resourcePath": "sprites\\spr_npc_boy_01\\spr_npc_boy_01.yy",
                 "resourceType": "GMSprite"
             }
         },

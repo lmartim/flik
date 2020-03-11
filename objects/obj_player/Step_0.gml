@@ -5,7 +5,7 @@
 // You can write your code in this editor
 
 //Checando colisão com o chão
-chao = place_meeting(x, y + 2, obj_collision);
+chao = place_meeting(x, y+2, obj_collision);
 
 //Configurando timer do pulo
 if (chao) {
@@ -35,23 +35,25 @@ if (chao) acel = acel_chao;
 else acel = acel_ar;
 
 //STATE MACHINE
-show_debug_message(string(estado));
 switch(estado) {
 	case state.parado:
-		
 		velh = 0;
-		velv = 0;
+		//Gravidade
+		if (!chao) {
+			velv += grav;
+			estado = state.pulando;
+		} else {
+			velv = 0;
+		}
 		
 		image_speed = 1;
 		sprite_index = spr_idle;
 		
-		//Gravidade
-		if (!chao) velv += grav;
 		
 		//Pulando
 		if (jump && (chao || timer_pulo > 0)) {
+
 			velv = -max_velv;
-			estado = state.pulando;
 		}
 		
 		//State change
@@ -62,14 +64,17 @@ switch(estado) {
 	
 		break;
 	case state.movendo:
-	
 		sprite_index = spr_esq;
 		
 		//Aplicando movimentação
 		velh = lerp(velh, avanco_h, acel);
 		
 		//Gravidade
-		if (!chao) velv += grav;
+		if (!chao) {
+			
+			velv += grav;
+			estado = state.pulando;
+		}
 		
 		//Pulando
 		if (jump && (chao || timer_pulo > 0)) {
@@ -98,11 +103,13 @@ switch(estado) {
 		
 		break;
 	case state.pulando:
-	
 		velh = lerp(velh, avanco_h, acel);
 		
 		if (!chao) velv += grav;
-		else estado = state.movendo;
+		else if (velv >= 0 && chao){
+			estado = state.movendo;	
+		}
+
 		
 		if (velv > 0) {
 			sprite_index = spr_fall;
