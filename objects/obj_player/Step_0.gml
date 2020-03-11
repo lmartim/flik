@@ -42,6 +42,7 @@ switch(estado) {
 		if (!chao) {
 			velv += grav;
 			estado = state.pulando;
+			show_debug_message("TESTE 2");
 		} else {
 			velv = 0;
 		}
@@ -71,7 +72,6 @@ switch(estado) {
 		
 		//Gravidade
 		if (!chao) {
-			
 			velv += grav;
 			estado = state.pulando;
 		}
@@ -107,6 +107,7 @@ switch(estado) {
 		
 		if (!chao) velv += grav;
 		else if (velv >= 0 && chao){
+			show_debug_message("TESTE");
 			estado = state.movendo;	
 		}
 
