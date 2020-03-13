@@ -21,6 +21,9 @@ timer_pulo = limite_pulo;
 isStairs = false;
 isStairsDown = false;
 
+//--------------NPC
+npc = noone;
+
 //--------------CONTROLE
 chao = false;
 
@@ -28,7 +31,8 @@ enum state {
 	parado,
 	movendo,
 	escalando,
-	pulando
+	pulando,
+	interagindo
 }
 estado = state.parado
 
@@ -37,3 +41,12 @@ spr_jump = spr_player_jump;
 spr_fall = spr_player_fall;
 spr_climb = spr_player_climb;
 spr_esq = spr_player_esq;
+
+
+
+//--------Dialogue Stuff
+reset_dialogue_defaults();
+myPortrait			= spr_player_portrait;
+myVoice				= snd_voice2;
+myFont				= fnt_dialogue;
+myName				= "Flik";

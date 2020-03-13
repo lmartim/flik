@@ -4,8 +4,15 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+//Desativa caso chat esteja na tela
+if(instance_exists(obj_textbox)) return;
+
 //Checando colisão com o chão
-chao = place_meeting(x, y+2, obj_collision);
+chao = place_meeting(x, y+1, obj_collision);
+
+//Checando colisão com NPCs
+npc = instance_place(x, y, obj_npc);
+
 
 //Configurando timer do pulo
 if (chao) {
@@ -37,12 +44,12 @@ else acel = acel_ar;
 //STATE MACHINE
 switch(estado) {
 	case state.parado:
+
 		velh = 0;
 		//Gravidade
 		if (!chao) {
 			velv += grav;
 			estado = state.pulando;
-			show_debug_message("TESTE 2");
 		} else {
 			velv = 0;
 		}
@@ -53,8 +60,13 @@ switch(estado) {
 		
 		//Pulando
 		if (jump && (chao || timer_pulo > 0)) {
-
+			estado = state.pulando;
 			velv = -max_velv;
+		}
+		
+		//Interagindo
+		if (up && npc != noone) {
+			estado = state.interagindo;	
 		}
 		
 		//State change
@@ -66,7 +78,6 @@ switch(estado) {
 		break;
 	case state.movendo:
 		sprite_index = spr_esq;
-		
 		//Aplicando movimentação
 		velh = lerp(velh, avanco_h, acel);
 		
@@ -82,6 +93,11 @@ switch(estado) {
 			estado = state.pulando;
 		}
 		
+		//Interagindo
+		if (up && npc != noone) {
+			estado = state.interagindo;	
+		}
+		
 		if (abs(velv) < .5 && abs(velh) < .5) estado = state.parado;
 		
 		break;
@@ -91,14 +107,21 @@ switch(estado) {
 		
 		sprite_index = spr_climb;
 		if (up || down) {
-			image_speed = .5;
+			image_speed = .6;
 		} else {
 			image_speed = 0;	
 		}
 		
+		//Pulando
+		if (jump) {
+			velv = -max_velv;
+			estado = state.pulando;
+		}
+		
 		if (!isStairs || (down && place_meeting(x, y + 1, obj_collision))) {
-			estado = state.parado;
 			velv = 0;
+			velh = 0;
+			estado = state.parado;
 		}
 		
 		break;
@@ -107,8 +130,12 @@ switch(estado) {
 		
 		if (!chao) velv += grav;
 		else if (velv >= 0 && chao){
-			show_debug_message("TESTE");
-			estado = state.movendo;	
+			
+			if (left || right) {
+				estado = state.movendo;		
+			} else {
+				estado = state.parado;
+			}
 		}
 
 		
@@ -118,6 +145,17 @@ switch(estado) {
 			sprite_index = spr_jump;	
 		}
 		
+		break;
+	case state.interagindo:
+		velv = 0;
+		velh = 0;
+		
+		sprite_index = spr_idle;
+		
+		npc.talk = true;	
+		
+		estado = state.parado;
+	
 		break;
 }
 
@@ -131,8 +169,7 @@ if (isStairs && estado != state.escalando && up && !isStairsDown) {
 	estado = state.escalando;	
 }
 if (isStairsDown && estado != state.escalando && down) {
-	x = isStairs.x+20;
-	y = isStairs.y+15;
+	x = isStairsDown.x+20;
+	y = isStairsDown.y+30;
 	estado = state.escalando;	
 }
-
